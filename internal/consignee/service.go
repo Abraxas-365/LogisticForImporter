@@ -1,4 +1,4 @@
-package consignatario
+package consignee
 
 import (
 	"context"
@@ -16,7 +16,7 @@ func NewService(repo Repository) *Service {
 }
 
 // CreateConsignatario creates a new consignatario
-func (s *Service) CreateConsignatario(ctx context.Context, consignatario *Consignatario) (*Consignatario, error) {
+func (s *Service) CreateConsignatario(ctx context.Context, consignatario *Consignee) (*Consignee, error) {
 	// Validate consignatario if needed
 	if err := consignatario.DocumentType.IsValid(); err != nil {
 		return nil, errors.ErrBadRequest(err.Error())
@@ -31,7 +31,7 @@ func (s *Service) CreateConsignatario(ctx context.Context, consignatario *Consig
 }
 
 // GetConsignatario retrieves a consignatario by ID
-func (s *Service) GetConsignatario(ctx context.Context, id int) (*Consignatario, error) {
+func (s *Service) GetConsignatario(ctx context.Context, id int) (*Consignee, error) {
 	consignatario, err := s.repo.GetConsignatarioById(ctx, id)
 	if err != nil {
 		if errors.IsNotFound(err) {
@@ -44,7 +44,7 @@ func (s *Service) GetConsignatario(ctx context.Context, id int) (*Consignatario,
 }
 
 // UpdateConsignatario updates an existing consignatario
-func (s *Service) UpdateConsignatario(ctx context.Context, consignatario *Consignatario) (*Consignatario, error) {
+func (s *Service) UpdateConsignatario(ctx context.Context, consignatario *Consignee) (*Consignee, error) {
 	// Validate consignatario if needed
 	if err := consignatario.DocumentType.IsValid(); err != nil {
 		return nil, err
@@ -59,7 +59,7 @@ func (s *Service) UpdateConsignatario(ctx context.Context, consignatario *Consig
 }
 
 // GetAllByUserId retrieves all consignatarios for a given user ID with pagination
-func (s *Service) GetAllByUserId(ctx context.Context, userId int, pageNumber, pageSize int) (database.PaginatedRecord[Consignatario], error) {
+func (s *Service) GetAllByUserId(ctx context.Context, userId int, pageNumber, pageSize int) (database.PaginatedRecord[Consignee], error) {
 	paginatedConsignatarios, err := s.repo.GetAllByUserId(ctx, userId, pageNumber, pageSize)
 	if err != nil {
 		return paginatedConsignatarios, err

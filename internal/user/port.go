@@ -7,7 +7,7 @@ import (
 )
 
 type Repository interface {
-	SaveUser(ctx context.Context, u *User) error
+	SaveUser(ctx context.Context, u *User) (*User, error)
 	GetUserById(ctx context.Context, id int) (*User, error)
 	UpdateUser(ctx context.Context, u *User) (*User, error)
 	GetAllUsers(ctx context.Context, page int, pageSize int) (database.PaginatedRecord[User], error)

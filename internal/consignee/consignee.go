@@ -1,14 +1,16 @@
-package consignatario
+package consignee
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/Abraxas-365/toolkit/pkg/errors"
 )
 
 type DocumentType string
 
-// Consignatario represents a consignatario (can be associated with a user)
-type Consignatario struct {
+// Consignee represents a consignatario (can be associated with a user)
+type Consignee struct {
 	ID             int          `json:"id"`
 	UserID         int          `json:"user_id"`              // Reference to the associated user
 	DocumentType   DocumentType `json:"document_type"`        // Document type (RUC 10, RUC 20, DNI, CI, Passport)
@@ -28,6 +30,23 @@ const (
 	Passport DocumentType = "Passport"
 )
 
+func NewDocumentType(docType string) (DocumentType, error) {
+	switch DocumentType(strings.ToUpper(docType)) {
+	case RUC10:
+		return RUC10, nil
+	case RUC20:
+		return RUC20, nil
+	case DNI:
+		return DNI, nil
+	case CI:
+		return CI, nil
+	case Passport:
+		return Passport, nil
+	default:
+		return "", errors.ErrBadRequest("invalid DocumentType")
+	}
+}
+
 // IsValid checks if the Consignatario's DocumentType is valid
 func (dt DocumentType) IsValid() error {
 	switch dt {
@@ -37,6 +56,6 @@ func (dt DocumentType) IsValid() error {
 	return errors.ErrBadRequest(fmt.Sprintf("invalid DocumentType: %s", dt))
 }
 
-func (c *Consignatario) IsOfUser(userId int) bool {
+func (c *Consignee) IsOfUser(userId int) bool {
 	return c.UserID == userId
 }

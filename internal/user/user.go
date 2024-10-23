@@ -2,6 +2,7 @@ package user
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/Abraxas-365/toolkit/pkg/errors"
 )
@@ -13,6 +14,19 @@ const (
 	CE       DocumentType = "CE"
 	Passport DocumentType = "Passport"
 )
+
+func NewDocumentType(docType string) (DocumentType, error) {
+	switch DocumentType(strings.ToUpper(docType)) {
+	case DNI:
+		return DNI, nil
+	case CE:
+		return CE, nil
+	case Passport:
+		return Passport, nil
+	default:
+		return "", errors.ErrBadRequest("Invalid DocumentType")
+	}
+}
 
 type User struct {
 	ID             int          `json:"id"`

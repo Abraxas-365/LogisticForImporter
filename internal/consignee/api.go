@@ -1,4 +1,4 @@
-package consignatario
+package consignee
 
 import (
 	"github.com/Abraxas-365/cabo/internal/auth"
@@ -28,7 +28,7 @@ func SetupRoutes(app *fiber.App, service *Service, authMiddleware *lucia.AuthMid
 			return errors.ErrBadRequest("Invalid request body")
 		}
 
-		newConsignatario := Consignatario{
+		newConsignatario := Consignee{
 			DocumentType:   newConsignatarioInput.DocumentType,
 			DocumentNumber: newConsignatarioInput.DocumentNumber,
 			FirstName:      newConsignatarioInput.FirstName,
@@ -97,7 +97,7 @@ func SetupRoutes(app *fiber.App, service *Service, authMiddleware *lucia.AuthMid
 			return errors.ErrBadRequest("Invalid request body")
 		}
 
-		updatedConsignatario := Consignatario{
+		updatedConsignatario := Consignee{
 			ID:             id,
 			DocumentType:   updateConsignatarioInput.DocumentType,
 			DocumentNumber: updateConsignatarioInput.DocumentNumber,

@@ -2,30 +2,32 @@ package user
 
 import (
 	"github.com/Abraxas-365/cabo/internal/auth"
+	"github.com/Abraxas-365/cabo/internal/user"
+	"github.com/Abraxas-365/cabo/internal/user/usersrv"
 	"github.com/Abraxas-365/toolkit/pkg/errors"
 	"github.com/Abraxas-365/toolkit/pkg/lucia"
 	"github.com/gofiber/fiber/v2"
 )
 
 // SetupRoutes sets up the routes for user endpoints
-func SetupRoutes(app *fiber.App, service *Service, authMiddleware *lucia.AuthMiddleware[*auth.AuthUser]) {
+func SetupRoutes(app *fiber.App, service *usersrv.Service, authMiddleware *lucia.AuthMiddleware[*auth.AuthUser]) {
 	// Create a new user
 	app.Post("/users", authMiddleware.RequireAuth(), func(c *fiber.Ctx) error {
 
 		newUserInput := struct {
-			DocumentType   DocumentType `json:"document_type"`       // Document type (DNI, CE, Passport)
-			DocumentNumber string       `json:"document_number"`     // The user's document number
-			FirstName      string       `json:"first_name"`          // First name
-			LastName       string       `json:"last_name,omitempty"` // Last name (optional)
-			Phone          string       `json:"phone,omitempty"`     // Contact phone number
-			Email          string       `json:"email,omitempty"`     // Contact email
+			DocumentType   user.DocumentType `json:"document_type"`       // Document type (DNI, CE, Passport)
+			DocumentNumber string            `json:"document_number"`     // The user's document number
+			FirstName      string            `json:"first_name"`          // First name
+			LastName       string            `json:"last_name,omitempty"` // Last name (optional)
+			Phone          string            `json:"phone,omitempty"`     // Contact phone number
+			Email          string            `json:"email,omitempty"`     // Contact email
 		}{}
 
 		if err := c.BodyParser(&newUserInput); err != nil {
 			return errors.ErrBadRequest("Invalid request body")
 		}
 
-		newUser := User{
+		newUser := user.User{
 			DocumentType:   newUserInput.DocumentType,
 			DocumentNumber: newUserInput.DocumentNumber,
 			FirstName:      newUserInput.FirstName,
@@ -88,19 +90,19 @@ func SetupRoutes(app *fiber.App, service *Service, authMiddleware *lucia.AuthMid
 			return errors.ErrForbidden("User not allowed to access this resource")
 		}
 		updateUserInput := struct {
-			DocumentType   DocumentType `json:"document_type"`       // Document type (DNI, CE, Passport)
-			DocumentNumber string       `json:"document_number"`     // The user's document number
-			FirstName      string       `json:"first_name"`          // First name
-			LastName       string       `json:"last_name,omitempty"` // Last name (optional)
-			Phone          string       `json:"phone,omitempty"`     // Contact phone number
-			Email          string       `json:"email,omitempty"`     // Contact email
+			DocumentType   user.DocumentType `json:"document_type"`       // Document type (DNI, CE, Passport)
+			DocumentNumber string            `json:"document_number"`     // The user's document number
+			FirstName      string            `json:"first_name"`          // First name
+			LastName       string            `json:"last_name,omitempty"` // Last name (optional)
+			Phone          string            `json:"phone,omitempty"`     // Contact phone number
+			Email          string            `json:"email,omitempty"`     // Contact email
 		}{}
 
 		if err := c.BodyParser(&updateUserInput); err != nil {
 			return errors.ErrBadRequest("Invalid request body")
 		}
 
-		updatedUser := User{
+		updatedUser := user.User{
 			ID:             id,
 			DocumentType:   updateUserInput.DocumentType,
 			DocumentNumber: updateUserInput.DocumentNumber,

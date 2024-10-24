@@ -28,6 +28,36 @@ func NewDocumentType(docType string) (DocumentType, error) {
 	}
 }
 
+type Direction struct {
+	ID           int    `json:"id"`
+	UserID       int    `json:"user_id"`
+	Country      string `json:"country" validate:"required"`
+	State        string `json:"state" validate:"required"`
+	City         string `json:"city" validate:"required"`
+	AddressLine1 string `json:"address_line1" validate:"required"`
+	AddressLine2 string `json:"address_line2,omitempty" validate:"omitempty"`
+	PostalCode   string `json:"postal_code" validate:"required"`
+}
+
+func (d *Direction) Validate() error {
+	if d.Country == "" {
+		return errors.ErrBadRequest("Country is required")
+	}
+	if d.State == "" {
+		return errors.ErrBadRequest("State is required")
+	}
+	if d.City == "" {
+		return errors.ErrBadRequest("City is required")
+	}
+	if d.AddressLine1 == "" {
+		return errors.ErrBadRequest("AddressLine1 is required")
+	}
+	if d.PostalCode == "" {
+		return errors.ErrBadRequest("PostalCode is required")
+	}
+	return nil
+}
+
 type User struct {
 	ID             int          `json:"id"`
 	IsComplete     bool         `json:"is_complete"`
@@ -37,6 +67,7 @@ type User struct {
 	LastName       string       `json:"last_name,omitempty" validate:"omitempty"`
 	Email          string       `json:"email,omitempty" validate:"omitempty,email"`
 	Phone          string       `json:"phone,omitempty" validate:"omitempty"`
+	Direction      *[]Direction `json:"direction,omitempty" validate:"omitempty"`
 }
 
 func (dt DocumentType) IsValid() error {

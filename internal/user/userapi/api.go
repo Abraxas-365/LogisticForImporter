@@ -1,4 +1,4 @@
-package user
+package userapi
 
 import (
 	"github.com/Abraxas-365/cabo/internal/auth"

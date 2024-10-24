@@ -14,7 +14,7 @@ type Service struct {
 	userSrv apis.UserServicer
 }
 
-func NewService(repo consignee.Repository, userSrv apis.UserServicer) *Service {
+func New(repo consignee.Repository, userSrv apis.UserServicer) *Service {
 	return &Service{
 		repo:    repo,
 		userSrv: userSrv,

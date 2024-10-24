@@ -16,7 +16,7 @@ type Service struct {
 	consignatarioSrv apis.ConsigneeServicer
 }
 
-func NewService(repo user.Repository) *Service {
+func New(repo user.Repository) *Service {
 	return &Service{repo: repo}
 }
 

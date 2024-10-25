@@ -87,9 +87,8 @@ func SetupRoutes(app *fiber.App, service *productsrv.Service, authMiddleware *lu
 		}
 
 		updateProductInput := struct {
-			WarehouseID int            `json:"warehouse_id"`
-			Status      product.Status `json:"status"`
-			Invoices    []string       `json:"invoices"` // List of S3 URLs
+			WarehouseID int      `json:"warehouse_id"`
+			Invoices    []string `json:"invoices"` // List of S3 URLs
 		}{}
 
 		if err := c.BodyParser(&updateProductInput); err != nil {
@@ -100,7 +99,6 @@ func SetupRoutes(app *fiber.App, service *productsrv.Service, authMiddleware *lu
 			ID:          id,
 			UserID:      sessionUserId,
 			WarehouseID: updateProductInput.WarehouseID,
-			Status:      updateProductInput.Status,
 			Invoices:    updateProductInput.Invoices,
 		}
 

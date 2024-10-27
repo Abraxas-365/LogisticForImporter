@@ -9,6 +9,7 @@ import (
 type Repository interface {
 	SaveProduct(ctx context.Context, u *Product) (*Product, error)
 	GetProductById(ctx context.Context, id int) (*Product, error)
+	GetPoductByTrakingCode(ctx context.Context, trakingCode string) (*Product, error)
 	UpdateProduct(ctx context.Context, u *Product) (*Product, error)
 	GetAllUserProductsByStatus(ctx context.Context, status Status, userID int, page int, pageSize int) (database.PaginatedRecord[Product], error)
 	GetAllUserProductsByStatusAndWarehouse(ctx context.Context, status Status, userID int, warehouse int, page int, pageSize int) (database.PaginatedRecord[Product], error)

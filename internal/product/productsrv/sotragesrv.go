@@ -12,8 +12,8 @@ func (s *Service) GetUserProductsInStorage(ctx context.Context, userID, warehous
 	return s.repo.GetAllUserProductsByStatusAndWarehouse(ctx, product.InWarehouse, userID, warehouseID, page, pageSize)
 }
 
-func (s *Service) ProductArrivedToStorage(ctx context.Context, productID int) error {
-	p, err := s.GetProductById(ctx, productID)
+func (s *Service) ProductArrivedToStorage(ctx context.Context, trakingCode string) error {
+	p, err := s.repo.GetPoductByTrakingCode(ctx, trakingCode)
 	if err != nil {
 		return err
 	}

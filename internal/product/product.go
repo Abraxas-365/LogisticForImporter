@@ -4,6 +4,7 @@ package product
 type Product struct {
 	ID          int      `json:"id"`
 	UserID      int      `json:"user_id"`
+	TrakingCode string   `json:"traking_code"`
 	WarehouseID int      `json:"warehouse_id"`
 	Status      Status   `json:"status"`
 	Invoices    []string `json:"invoices"` //Aws s3 urls
